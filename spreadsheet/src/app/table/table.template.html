@@ -1,0 +1,71 @@
+<table id='data_table'>
+	<thead>
+        <tr>
+            <th [ngClass]='{num_column:true}'>N</th>
+            <th [ngClass]='{capability_column:true}'>{{ columns[0] }}</th>
+            <th [ngClass]='{edition_column:true}'>{{ columns[1] }}</th>
+            <th>{{ columns[2] }}</th>
+			<th [ngClass]='{controls_column:true}'>Edit Controls</th>
+        </tr>
+	</thead>
+	<tbody>
+		<ng-container *ngFor='let data of table_data.slice(state.selected_page * state.items_per_page, (state.selected_page + 1) * state.items_per_page); index as i'>		
+		
+		<tr *ngIf="state.selected_page * state.items_per_page + i == insert_before">
+			<td [ngClass]='{num_column:true, td_border:true}'>*</td>
+            <td [ngClass]='{capability_column:true, td_border:true}'><input [ngClass]='{edit_field:true}'/></td>
+            <td [ngClass]='{edition_column:true, td_border:true}'><input [ngClass]='{edit_field:true}'/></td>
+			<td [ngClass]='{td_border:true}'><input [ngClass]='{edit_field:true}'/></td>
+			<td [ngClass]='{controls_column:true, td_border:true}'>
+				  <button [ngClass]='{buttonControl:true}' on-click='save()'>Save</button>
+				  <button [ngClass]='{buttonControl:true}' on-click='cancel()'>Cancel</button>
+			</td>
+        </tr>
+		
+		<ng-container *ngIf="state.selected_page * state.items_per_page + i == edit_row; then editBlock else infoBlock"></ng-container>
+		<ng-template #editBlock>
+			<tr  on-click='clickRow(state.selected_page * state.items_per_page + i)'>
+				<td [ngClass]='{num_column:true, td_border:true, td_selected:state.selected_page * state.items_per_page + i == state.selected_item}'>{{ state.selected_page * state.items_per_page + i + 1 }}</td>
+				<td [ngClass]='{capability_column:true, td_border:true, td_selected:state.selected_page * state.items_per_page + i == state.selected_item}'><input [ngClass]='{edit_field:true}' value='{{  data[0] }}'/></td>
+				<td [ngClass]='{edition_column:true, td_border:true, td_selected:state.selected_page * state.items_per_page + i == state.selected_item}'><input [ngClass]='{edit_field:true}' value='{{  data[1] }}'/></td>
+				<td [ngClass]='{td_border:true, td_selected:state.selected_page * state.items_per_page + i == state.selected_item}'><input [ngClass]='{edit_field:true}' value='{{  data[2] }}'/></td>
+				<td [ngClass]='{controls_column:true, td_border:true, td_selected:state.selected_page * state.items_per_page + i == state.selected_item}'>
+					<button [ngClass]='{buttonControl:true}' on-click='save()'>Save</button>
+					<button [ngClass]='{buttonControl:true}' on-click='cancel()'>Cancel</button>
+				</td>
+			</tr>
+		</ng-template>
+		<ng-template #infoBlock>
+			<tr  on-click='clickRow(state.selected_page * state.items_per_page + i)'>
+			<td [ngClass]='{num_column:true, td_border:true, td_selected:state.selected_page * state.items_per_page + i == state.selected_item}'>{{ state.selected_page * state.items_per_page + i + 1 }}</td>
+				<td [ngClass]='{capability_column:true, td_border:true, td_selected:state.selected_page * state.items_per_page + i == state.selected_item}'>{{  data[0] }}</td>
+				<td [ngClass]='{edition_column:true, td_border:true, td_selected:state.selected_page * state.items_per_page + i == state.selected_item}'>{{  data[1] }}</td>
+				<td [ngClass]='{td_border:true, td_selected:state.selected_page * state.items_per_page + i == state.selected_item}'>{{  data[2] }}</td>
+				<td [ngClass]='{controls_column:true, td_border:true, td_selected:state.selected_page * state.items_per_page + i == state.selected_item}'>
+					<div class="dropdown">
+					  <button class="dropbtn">&#9881;Edit</button>
+					  <div class="dropdown-content">
+						<a on-click='edit(state.selected_page * state.items_per_page + i)'>Edit</a>
+						<a on-click='insertBefore(state.selected_page * state.items_per_page + i)'>Insert Before.</a>
+						<a on-click='insertAfter(state.selected_page * state.items_per_page + i)'>Insert After.</a>
+						<a on-click='delete(state.selected_page * state.items_per_page + i)'>Delete.</a>
+					  </div>
+					</div>
+				</td>
+			</tr>
+		</ng-template>
+		
+		<tr *ngIf="state.selected_page * state.items_per_page + i == insert_after">
+			<td [ngClass]='{num_column:true, td_border:true}'>*</td>
+            <td [ngClass]='{capability_column:true, td_border:true}'><input [ngClass]='{edit_field:true}'/></td>
+            <td [ngClass]='{edition_column:true, td_border:true}'><input [ngClass]='{edit_field:true}'/></td>
+			<td [ngClass]='{td_border:true}'><input [ngClass]='{edit_field:true}'/></td>
+			<td [ngClass]='{controls_column:true, td_border:true}'>
+				  <button [ngClass]='{buttonControl:true}' on-click='save()'>Save</button>
+				  <button [ngClass]='{buttonControl:true}' on-click='cancel()'>Cancel</button>
+			</td>
+        </tr>
+		
+		</ng-container>
+	</tbody>
+</table>

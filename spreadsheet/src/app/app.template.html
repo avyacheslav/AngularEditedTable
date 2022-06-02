@@ -1,0 +1,10 @@
+<div id='header'>
+        <caption-comp></caption-comp>
+        <div><paginator-comp [state]='state'></paginator-comp></div>
+</div>
+<table id='layout_table'><tbody>	
+    <tr>
+        <td id='tree_container'><tree-comp [state]='state' (selectItemEvent)='selectItem($event)'></tree-comp></td>
+        <td id='table_container'><table-comp [state]='state'></table-comp></td>
+    </tr>
+</tbody></table>

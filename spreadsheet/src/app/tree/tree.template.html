@@ -1,0 +1,10 @@
+<ng-container *ngFor="let node of nodes">
+    <button [ngClass]="{treeNodeButton: node.unfolded || !node.items.includes(selected)}" on-click="clickNode(node)">&bull;{{ node.category }}</button>
+	<br/>
+	<ng-container *ngIf="node.unfolded">
+		<ng-container *ngFor="let item of node.items">
+			<button [ngClass]="{treeNodeButton: getSelectedItem(state.selected_item) != item}" style='margin-left:20px' on-click="clickItem(item)">{{ item }}</button>
+			<br/>
+		</ng-container>
+	</ng-container>
+</ng-container>

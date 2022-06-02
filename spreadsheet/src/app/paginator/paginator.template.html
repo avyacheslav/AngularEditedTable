@@ -1,0 +1,11 @@
+<span [ngClass]='{pagination:true}'>
+	<span [ngClass]='{pagination_info:true}'>
+		Page {{ state.selected_page + 1 }} from {{ state.total_pages }}.
+	</span>
+	<button-left-comp (onDecrease)='onDecrease()'></button-left-comp>
+		<button-comp *ngFor='let page_num of buttons' [num]='page_num' [current_page]='page_num == state.selected_page + 1' (buttonClicked)='buttonClicked($event)'></button-comp>
+	<button-right-comp (onIncrease)='onIncrease()'></button-right-comp>
+	<span>
+		<input [(ngModel)]="state.items_per_page" [ngClass]='{lines_per_page_value:true}'/><label [ngClass]='{lines_per_page_value:true}'> lines per page.  {{ state.total_items }} lines total.</label>
+	</span>
+</span>
